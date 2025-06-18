@@ -1,0 +1,35 @@
+<div class="container py-5">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let item of items; let i = index">
+        <tr *ngIf="item.data?.length">
+          <td>{{ item.data[0].title }}</td>
+          <td>{{ item.data[0].description | slice:0:100 }}...</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="toggleImages(i)">
+              {{ selectedIndex === i ? 'Ocultar Imágenes' : 'Mostrar Imágenes' }}
+            </button>
+          </td>
+        </tr>
+
+        <!-- Fila para mostrar las imágenes, solo si es el seleccionado -->
+        <tr *ngIf="selectedIndex === i">
+          <td colspan="3">
+            <div class="row g-3">
+              <div class="col-md-3" *ngFor="let link of item.links">
+                <img [src]="link.href" class="img-fluid rounded shadow" [alt]="link.rel" />
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</div>
